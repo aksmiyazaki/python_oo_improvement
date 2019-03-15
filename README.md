@@ -1,4 +1,9 @@
-# python_oo_improvement
+# Python - Improving OO Skills with Language
+
+# Python 2 vs Python 3
+* Python 2 will stop to receive security upgrades in early 2020
+* All useful packages are available for Python 3
+* Python 3 is the future of the language.
 
 ## Dynamic Typing
 PROS:
