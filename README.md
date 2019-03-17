@@ -30,3 +30,6 @@ Cons:
     - print(f"Hello, his name is {name}")
 
   - https://pyformat.info/
+
+## Tuples
+  - Immutables, like strings
