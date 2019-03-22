@@ -32,3 +32,7 @@ tupl[0] = 'NEW'
 ## Sets
 ## Unordered collections of unique elements
 myset = set()
+myset.add(1)
+myset.add(2)
+myset.add(2)
+myset

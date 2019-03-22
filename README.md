@@ -33,3 +33,10 @@ Cons:
 
 ## Tuples
   - Immutables, like strings
+
+## Modes of file treatment
+  - 'r' - Read only
+  - 'w' - write only (ovewrite files or create new)
+  - 'a' - append only
+  - 'r+' - reading and writing
+  - 'w+' - writing and reading (ovewrites existing files)
