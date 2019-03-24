@@ -27,13 +27,15 @@ for raw_file in data_list:
     file = open(join(input_dir, raw_file))
     row_counter = 0
     for row in file:
+        row_counter += 1
+        row = row.strip()
         try:
-            row_counter += 1
-            row = row.strip()
             geo_parser.parse_raw_data(row)
-            if geo_parser.is_complete():
-                geo_point = geo_parser.get_geo_point()
-                geo_parser.reset()
         except Exception as e:
-            print(f"Exception raised on row {row_counter}")
-            print(str(e))
+            print(f"[ERROR] at line {row_counter}")
+            geo_parser.reset()
+            if geo_parser.match_row_data_type(geoparse.GeoParserState.SEEK_LAT, row):
+                geo_parser.parse_raw_data(row)
+        if geo_parser.is_complete():
+            geo_point = geo_parser.get_geo_point()
+            geo_parser.reset()

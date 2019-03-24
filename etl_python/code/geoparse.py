@@ -7,6 +7,7 @@ class GeoParserState(Enum):
     SEEK_LAT = 1
     SEEK_LON = 2
     SEEK_DIST = 3
+    RESET_STATE = 4
 
 class GeoParser:
     __raw_lat = None
@@ -15,7 +16,11 @@ class GeoParser:
     __lat_regexp = "LATITUDE: [-]*[0-9]{1,2}°[0-9]{1,2}′[0-9]{1,2}″[SN]"
     __lon_regexp = "LONGITUDE: [-]*[0-9]{1,3}°[0-9]{1,2}′[0-9]{1,2}″[WE]"
     __dist_regexp = "DISTANCE: [0-9]*.[0-9]* KM"
-    __parser_state = GeoParserState.SEEK_LAT
+    __parser_expected_state = GeoParserState.SEEK_LAT
+
+    @property
+    def parser_expected_state(self):
+        return self.__parser_expected_state
 
     def __remove_prefix(self, raw_data):
         return raw_data[raw_data.index(':') + 2:]
@@ -24,52 +29,25 @@ class GeoParser:
         res = re.search(aim_regex, raw_line)
         if res is not None:
             if aim_field is not None:
-                raise Exception("[ERROR]    {self.__parser_state} expected something that isn't in the raw string {raw_line}")
-            aim_field = self.__remove_prefix(res.group(0))
+                raise Exception(f"[ERROR]    {self.__parser_expected_state} expected something that isn't in the raw string {raw_line}")
+            return self.__remove_prefix(res.group(0))
+        else:
+            raise Exception(f"[ERROR]    {self.__parser_expected_state} expected something that isn't in the raw string {raw_line}")
 
     def parse_raw_data(self, raw_line):
         try:
             raw_line = raw_line.upper()
-            aimed_regex = None
-            aimed_field = None
-            next_state = None
-            if self.__parser_state == GeoParserState.SEEK_LAT:
-                aimed_regex = self.__lat_regexp
-                aimed_field = self.__raw_lat
-                next_state = GeoParser.SEEK_LON
-            elif self.__parser_state == GeoParserState.SEEK_LON:
-                aimed_regex = self.__lon_regexp
-                aimed_field = self.__raw_lon
-                next_state = GeoParser.SEEK_DIST
+
+            if self.__parser_expected_state == GeoParserState.SEEK_LAT:
+                self.__raw_lat = self.__process_data(self.__lat_regexp, self.__raw_lat, raw_line)
+                self.__parser_expected_state = GeoParserState.SEEK_LON
+            elif self.__parser_expected_state == GeoParserState.SEEK_LON:
+                self.__raw_lon = self.__process_data(self.__lon_regexp, self.__raw_lon, raw_line)
+                self.__parser_expected_state = GeoParserState.SEEK_DIST
             else:
-                aimed_regex = self.__dist_regexp
-                aimed_field = self.__raw_dist
-                next_state = GeoParser.SEEK_LAT
-
-            self.__process_data(aimed_regex, aimed_field, raw_line)
-
-            res = re.search(self.__lat_regexp, raw_line)
-            if res is not None:
-                if self.__raw_lat is not None:
-                    raise Exception("[ERROR]    Latitude is already filled.")
-                self.__raw_lat = self.__remove_prefix(res.group(0))
-                return
-
-            res = re.search(self.__lon_regexp, raw_line)
-            if res:
-                if self.__raw_lon is not None:
-                    raise Exception("[ERROR]    Longitude is already filled.")
-                self.__raw_lon = self.__remove_prefix(res.group(0))
-                return
-
-            res = re.search(self.__dist_regexp, raw_line)
-            if res:
-                if self.__raw_dist is not None:
-                    raise Exception("[ERROR]    Distance is already filled.")
-                self.__raw_dist = self.__remove_prefix(res.group(0).lower())
-                return
-
-            raise Exception("[ERROR]  Couldn't find any defined regex for line {raw_line}")
+                self.__raw_dist = self.__process_data(self.__dist_regexp, self.__raw_dist, raw_line)
+                self.__raw_dist = self.__raw_dist.lower()
+                self.__parser_expected_state = GeoParserState.RESET_STATE
         except Exception as e:
             print(f"[ERROR] Exception raised on parse_raw_data")
             print(str(e))
@@ -89,8 +67,18 @@ class GeoParser:
                         LAT - {str(self.__raw_lat)} LON - {str(self.__raw_lon)} DIST - {str(self.__raw_dist)}"""
             raise Exception(err_msg)
 
+    def match_row_data_type(self, desired_type, raw_line):
+        if desired_type == GeoParserState.SEEK_LAT:
+            return re.search(self.__lat_regexp, raw_line) is not None
+        elif desired_type == GeoParserState.SEEK_LON:
+            return re.search(self.SEEK_LON, raw_line) is not None
+        elif desired_type == GeoParserState.SEEK_DIST:
+            return re.search(self.SEEK_DIST, raw_line) is not None
+        else:
+            raise Exception(f"[ERROR]    Couldn't match any type for {desired_type}")
+
     def reset(self):
         self.__raw_lat = None
         self.__raw_lon = None
         self.__raw_dist = None
-        __parser_state = GeoParserState.SEEK_LAT
+        self.__parser_expected_state = GeoParserState.SEEK_LAT
