@@ -35,6 +35,7 @@ for raw_file in data_list:
             print(f"[ERROR] at line {row_counter}")
             geo_parser.reset()
             if geo_parser.match_row_data_type(geoparse.GeoParserState.SEEK_LAT, row):
+                print(f"[INFO] at line {row_counter}, it seems that this is a new point.")
                 geo_parser.parse_raw_data(row)
         if geo_parser.is_complete():
             geo_point = geo_parser.get_geo_point()

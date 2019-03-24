@@ -68,12 +68,13 @@ class GeoParser:
             raise Exception(err_msg)
 
     def match_row_data_type(self, desired_type, raw_line):
+        raw_line = raw_line.upper()
         if desired_type == GeoParserState.SEEK_LAT:
             return re.search(self.__lat_regexp, raw_line) is not None
         elif desired_type == GeoParserState.SEEK_LON:
             return re.search(self.SEEK_LON, raw_line) is not None
         elif desired_type == GeoParserState.SEEK_DIST:
-            return re.search(self.SEEK_DIST, raw_line) is not None
+            return re.search(self.SEEK_DIST, raw_line)  is not None
         else:
             raise Exception(f"[ERROR]    Couldn't match any type for {desired_type}")
 
