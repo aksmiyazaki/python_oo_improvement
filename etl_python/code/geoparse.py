@@ -12,19 +12,16 @@ class GeoParser:
     __raw_lat = None
     __raw_lon = None
     __raw_dist = None
-    __lat_regexp = "LATITUDE: [-]*[0-9]{1,2}°[0-9]{1,2}′[0-9]{1,2}″[SN]"
-    __lon_regexp = "LONGITUDE: [-]*[0-9]{1,3}°[0-9]{1,2}′[0-9]{1,2}″[WE]"
-    __dist_regexp = "DISTANCE: [0-9]*.[0-9]* KM"
-
-    def __remove_prefix(self, raw_data):
-        return raw_data[raw_data.index(':') + 2:]
+    __lat_regexp = "[-]*[0-9]{1,2}°[0-9]{1,2}′[0-9]{1,2}″[SN]"
+    __lon_regexp = "[-]*[0-9]{1,3}°[0-9]{1,2}′[0-9]{1,2}″[WE]"
+    __dist_regexp = "[0-9]*.[0-9]* KM"
 
     def __process_data(self, aim_regex, aim_field, raw_line):
         res = re.search(aim_regex, raw_line)
         if res is not None:
             if aim_field is not None:
                 raise Exception(f"[ERROR]   The field is already filled [{aim_field}] [{raw_line}]")
-            return self.__remove_prefix(res.group(0))
+            return res.group(0)
         else:
             return None
 
