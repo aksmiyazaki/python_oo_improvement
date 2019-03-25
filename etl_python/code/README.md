@@ -11,8 +11,17 @@
 
 ---
 
+## Banco de dados
+* Tendo em vista que esse é apenas um projeto de demonstração de capacidades, optei por utilizar sqlite como RDBMS.
+* Alguns comandos do banco:
+    - Em uma linha de comando, execute sqlite3, se houver instalado esse comando inicia um processo do sqlite no console. Para finalizar, ctrl + C.
+    - Se precisar instalar, _sudo apt-get install sqlite3_.
+    - Para criar o banco, no diretório data deste zip, digite _sqlite3 <database_name>.db < create_database.sql_.
+    - Para acessar o banco, basta executar _sqlite3 <database_name>.db_.
+
 ## Utilizou-se...
 * Python 3.7
 * Bibliotecas Python
     * [GeoPy](https://geopy.readthedocs.io), para instalar _pip install geopy_
-*
+    *
+* SQLite

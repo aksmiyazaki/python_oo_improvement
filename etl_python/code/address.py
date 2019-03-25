@@ -2,7 +2,9 @@ from os import chdir
 chdir('/home/aksmiyazaki/git/python_oo_improvement/etl_python/code')
 
 import pycountry_convert
+import database
 from geopy.location import Location
+
 
 class Address:
     latitude = None
