@@ -1,34 +1,34 @@
 CREATE TABLE Street
 (
   StreetName VARCHAR(255) NOT NULL,
-  PostalCode INT NOT NULL,
+  PostalCode VARCHAR(255) NOT NULL,
   PRIMARY KEY (PostalCode)
 );
 
 CREATE TABLE District
 (
-  DistrictId INT NOT NULL,
+  DistrictId INT NOT NULL AUTOINCREMENT,
   DistrictName VARCHAR(255) NOT NULL,
   PRIMARY KEY (DistrictId)
 );
 
 CREATE TABLE City
 (
-  CityId INT NOT NULL,
+  CityId INT NOT NULL AUTOINCREMENT,
   CityName VARCHAR(255) NOT NULL,
   PRIMARY KEY (CityId)
 );
 
 CREATE TABLE Region
 (
-  RegionId INT NOT NULL,
+  RegionId INT NOT NULL AUTOINCREMENT,
   RegionName VARCHAR(255) NOT NULL,
   PRIMARY KEY (RegionId)
 );
 
 CREATE TABLE Country
 (
-  CountryId INT NOT NULL,
+  CountryId INT NOT NULL AUTOINCREMENT,
   CountryName VARCHAR(255) NOT NULL,
   PRIMARY KEY (CountryId)
 );
@@ -38,7 +38,7 @@ CREATE TABLE Address
   Latitude INT NOT NULL,
   Longitude INT NOT NULL,
   Number INT NOT NULL,
-  AddresId INT NOT NULL,
+  AddresId INT NOT NULL AUTOINCREMENT,
   PostalCode INT NOT NULL,
   CountryId INT NOT NULL,
   RegionId INT NOT NULL,

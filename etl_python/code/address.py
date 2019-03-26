@@ -40,3 +40,9 @@ class Address:
             print(f"Error parsing object")
             print(str(e))
             print(f"{str(geopy_location.raw)}")
+
+    def persist_address(self):
+        """
+        This method persists Address in a star schema.
+        """
+        
