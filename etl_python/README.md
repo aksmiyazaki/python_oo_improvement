@@ -23,6 +23,17 @@
     - Para acessar o banco, basta executar _sqlite3 <database_name>.db_.
 * Dependendo da possibilidade de reutilização do banco, talvez o ideal fosse utilizar um framework de mapeamento objeto-relacional (ORM), como o SQLAlchemy.
 
+### Estrutura do Banco
+
+Optei por estruturar o banco em uma arquitetura no formato estrela (star schema). É o formato mais simples de um data mart, com o objetivo de poder plugar uma aplicação OLAP depois para poder explorar os dados. A estrutura do banco ficou da seguinte forma:
+
+![Estrutura do banco](erdplus-diagram.png)
+
+Para fazer essa estrutura, foi utilizado a solução online ERDPlus.
+Ela gera o SQL diretamente do diagrama (o sql para a criação do banco está localizado em data/create_database.sql)
+
+---
+
 ## Utilizou-se...
 * Python 3.7
 * Bibliotecas Python

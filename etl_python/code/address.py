@@ -7,6 +7,9 @@ from geopy.location import Location
 
 
 class Address:
+    """This class represents an address
+    It has a set of attributes that composes the object such as latitude, Longitude
+    street, number, district, etc."""
     latitude = None
     longitude = None
     street = None
@@ -18,6 +21,11 @@ class Address:
     country = None
 
     def __init__(self, geopy_location):
+        """ Class constructor, initializes address attributes.
+        Keyword arguments:
+        geopy_location -- a GeoPy location with raw data to be converted into as
+        Address object.
+        """
         try:
             self.latitude = geopy_location.latitude
             self.longitude = geopy_location.longitude
