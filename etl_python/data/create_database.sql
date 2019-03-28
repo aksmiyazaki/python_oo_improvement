@@ -7,30 +7,26 @@ CREATE TABLE Street
 
 CREATE TABLE District
 (
-  DistrictId INT NOT NULL AUTOINCREMENT,
   DistrictName VARCHAR(255) NOT NULL,
-  PRIMARY KEY (DistrictId)
+  PRIMARY KEY (DistrictName)
 );
 
 CREATE TABLE City
 (
-  CityId INT NOT NULL AUTOINCREMENT,
   CityName VARCHAR(255) NOT NULL,
-  PRIMARY KEY (CityId)
+  PRIMARY KEY (CityName)
 );
 
 CREATE TABLE Region
 (
-  RegionId INT NOT NULL AUTOINCREMENT,
   RegionName VARCHAR(255) NOT NULL,
-  PRIMARY KEY (RegionId)
+  PRIMARY KEY (RegionName)
 );
 
 CREATE TABLE Country
 (
-  CountryId INT NOT NULL AUTOINCREMENT,
   CountryName VARCHAR(255) NOT NULL,
-  PRIMARY KEY (CountryId)
+  PRIMARY KEY (CountryName)
 );
 
 CREATE TABLE Address
@@ -38,16 +34,15 @@ CREATE TABLE Address
   Latitude INT NOT NULL,
   Longitude INT NOT NULL,
   Number INT NOT NULL,
-  AddresId INT NOT NULL AUTOINCREMENT,
-  PostalCode INT NOT NULL,
-  CountryId INT NOT NULL,
-  RegionId INT NOT NULL,
-  CityId INT NOT NULL,
-  DistrictId INT NOT NULL,
-  PRIMARY KEY (AddresId),
+  AddresId INTEGER PRIMARY KEY AUTOINCREMENT,
+  PostalCode VARCHAR(255) NOT NULL,
+  CountryName VARCHAR(255) NOT NULL,
+  DistrictName VARCHAR(255) NOT NULL,
+  RegionName VARCHAR(255) NOT NULL,
+  CityName VARCHAR(255) NOT NULL,
   FOREIGN KEY (PostalCode) REFERENCES Street(PostalCode),
-  FOREIGN KEY (CountryId) REFERENCES Country(CountryId),
-  FOREIGN KEY (RegionId) REFERENCES Region(RegionId),
-  FOREIGN KEY (CityId) REFERENCES City(CityId),
-  FOREIGN KEY (DistrictId) REFERENCES District(DistrictId)
+  FOREIGN KEY (CountryName) REFERENCES Country(CountryName),
+  FOREIGN KEY (DistrictName) REFERENCES District(DistrictName),
+  FOREIGN KEY (RegionName) REFERENCES Region(RegionName),
+  FOREIGN KEY (CityName) REFERENCES City(CityName)
 );

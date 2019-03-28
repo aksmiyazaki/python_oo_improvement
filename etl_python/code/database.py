@@ -1,7 +1,5 @@
-from os import chdir
-chdir('/home/aksmiyazaki/git/python_oo_improvement/etl_python/code')
-
 import sqlite3
+from sqlite3 import IntegrityError
 
 
 class DatabaseService:

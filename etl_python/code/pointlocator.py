@@ -1,6 +1,3 @@
-from os import chdir
-chdir('/home/aksmiyazaki/git/python_oo_improvement/etl_python/code')
-
 from geopy.location import Location
 from geopy.point import Point
 from geopy.geocoders import ArcGIS
@@ -25,13 +22,6 @@ class PointLocator:
         """
         return self.__cur_point
 
-    @CurrentPoint.setter
-    def CurrentPoint(self, value):
-        """
-        Sets the current point to be located.
-        """
-        self.__cur_point = value
-
     @staticmethod
     def get_instance():
         """
@@ -41,12 +31,20 @@ class PointLocator:
             PointLocator()
         return PointLocator.__instance
 
-    def locate_point(self):
+    def find_point(self, point):
         """
-        Method that locates the CurrentPoint.
-        Is assigns the result to a private attribute.
+        Method that, given a point, returns its raw location.
+        Returns a Geopy Location.
+        Keyword arguments:
+        point -- A Geopy Point object
         """
+        self.__cur_point = point
         self.__decoded_point = self.__coord_decoder.reverse(self.__cur_point, exactly_one=True, timeout=300)
+
+        if self.__decoded_point is not None:
+            return self.__decoded_point
+        else:
+            return None
 
     def __init__(self):
         """
@@ -59,19 +57,3 @@ class PointLocator:
         else:
             PointLocator.__instance = self
             self.__coord_decoder = ArcGIS()
-
-    def get_located_point(self):
-        """
-        Gets the decoded point.
-        """
-        if self.__decoded_point is not None:
-            return self.__decoded_point
-        else:
-            return None
-
-p = PointLocator()
-p.CurrentPoint = Point("30°02′59″S 51°12′05″W 2.2959 km")
-p.locate_point()
-lp = p.get_located_point()
-addr = address.Address(lp)
-lp.raw
