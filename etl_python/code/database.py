@@ -35,21 +35,26 @@ class DatabaseService:
             print(e)
             raise
 
-    def execute_insert(self, sql, must_commit = False):
+    def execute_insert(self, sql, params = None, must_commit = False):
         """
         This method executes an Insert into the database.
         Keyword arguments:
         sql -- a string object with the sql to be executed (insert) into the database
+        params -- a tuple with parameters to be inserted on sql.
         must_commit -- a bool object that indicates if it is necessary to call
         commit() method after each insert,
         """
         try:
             cur = self.__conn.cursor()
-            cur.execute(sql)
+            if params is None:
+                cur.execute(sql)
+            else:
+                cur.execute(sql, params)
             if must_commit:
                 self.__conn.commit()
         except Exception as e:
             print(f"[ERROR] Can't insert data:[{sql}]")
+            print(params)
             print(e)
             raise
 

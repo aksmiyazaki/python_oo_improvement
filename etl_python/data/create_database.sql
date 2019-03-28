@@ -33,7 +33,7 @@ CREATE TABLE Address
 (
   Latitude INT NOT NULL,
   Longitude INT NOT NULL,
-  Number INT NOT NULL,
+  Number INT,
   AddresId INTEGER PRIMARY KEY AUTOINCREMENT,
   PostalCode VARCHAR(255) NOT NULL,
   CountryName VARCHAR(255) NOT NULL,
