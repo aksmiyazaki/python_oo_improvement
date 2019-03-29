@@ -1,12 +1,13 @@
 # Avaliação Técnica
 
 ## Organização de classes/arquivos
-* _GeoParser_, contida no arquivo _geoparse.py_ é uma classe que, basicamente, faz o processamento das linhas do arquivo. Ela faz isso possivelmente com qualquer linha de tenha a sintaxe no formato DMS (Degrees Minutes Seconds). Ao ter todos os dados (Latitude, Longitude e Altitude), ela possui um método para retornar um *Point*, formato do GeoPy para pontos geográficos.
-* _PointLocator_, contida no arquivo _pointlocator.py_ é uma classe que, dado um ponto no formato Point do GeoPy, pode localizá-lo. Ela utiliza o Geocoder ArcGIS, o qual permite um número de requisições por mês gratuitamente. Todos os outros Geocoders (inclusive o do google maps v3) necessitam de pagamento e, como o enunciado prevê o uso apenas de tecnologias opensourse, isso foi o mais próximo disso que consegui encontrar.
-* _Address_, contida no arquivo _address.py_ é uma classe que extrai os dados requisitados de um objeto Location (geopy). Ela também é responsável pela geração dos SQL's para persistir seus objetos.
-* _DatabaseService_, contida no arquivo _database.py_ é uma classe que intermedia as interações (inserts e queries) com o BD.
-* No arquivo _extract_data.py_ está implementada toda a lógica de negócio para ler os dados dos arquivos, gerar pontos geográficos a partir deles, obter sua localização (informações como rua, CEP, cidade, etc.) e armazená-los no banco de dados
-* O arquivo _visualize_extracted_data.py_ carrega o banco e mostra algumas visualizações. Fiz poucas mais por questão de tempo mesmo.
+* _GeoParser_, contida no arquivo _<div style="display: inline">geoparse.py</div>_ é uma classe que, basicamente, faz o processamento das linhas do arquivo. Ela faz isso possivelmente com qualquer linha de tenha a sintaxe no formato DMS (Degrees Minutes Seconds). Ao ter todos os dados (Latitude, Longitude e Altitude), ela possui um método para retornar um *Point*, formato do GeoPy para pontos geográficos.
+* _PointLocator_, contida no arquivo _<div style="display: inline">pointlocator.py</div>_ é uma classe que, dado um ponto no formato Point do GeoPy, pode localizá-lo. Ela utiliza o Geocoder ArcGIS, o qual permite um número de requisições por mês gratuitamente. Todos os outros Geocoders (inclusive o do google maps v3) necessitam de pagamento e, como o enunciado prevê o uso apenas de tecnologias opensourse, isso foi o mais próximo disso que consegui encontrar.
+* _Address_, contida no arquivo _<div style="display: inline">address.py</div>_ é uma classe que extrai os dados requisitados de um objeto Location (geopy). Ela também é responsável pela geração dos SQL's para persistir seus objetos.
+* _DatabaseService_, contida no arquivo _<div style="display: inline">database.py</div>_ é uma classe que intermedia as interações (inserts e queries) com o BD.
+* O arquivo _extract_data.py_ **é executável** e é onde está implementada toda a lógica de negócio para ler os dados dos arquivos, gerar pontos geográficos a partir deles, obter sua localização (informações como rua, CEP, cidade, etc.) e armazená-los no banco de dados
+* O arquivo _visualize_extracted_data.py_ **é executável** e carrega o banco e mostra algumas visualizações. Fiz poucas mais por questão de tempo mesmo.
+* O arquivo _database_final.db_ contem o banco de dados populado após a execução do script extract data.
 ---
 
 ## Extração das Coordenadas dos arquivos - Premissas
@@ -26,7 +27,7 @@
 
 ### Estrutura do Banco
 
-Optei por estruturar o banco em uma arquitetura no formato estrela (star schema). É o formato mais simples de um data mart, com o objetivo de poder plugar uma aplicação OLAP depois para poder explorar os dados. A estrutura do banco ficou da seguinte forma:
+Optei por estruturar o banco em uma arquitetura no formato estrela (star schema). É o formato mais simples de um data mart, com o objetivo de poder plugar outra aplicação (e.g. PowerBi, Pentaho) para depois poder explorar os dados. A estrutura do banco ficou da seguinte forma:
 
 ![Estrutura do banco](erdplus-diagram.png)
 
