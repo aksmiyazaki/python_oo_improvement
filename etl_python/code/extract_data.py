@@ -24,7 +24,6 @@ else:
     database_path = str(args.db)
 
 print(f"Running with the following arguments: [{input_dir}] [{database_path}]")
-input()
 
 db = DatabaseService.get_instance()
 db.initialize_database_conn(database_path)
@@ -51,7 +50,6 @@ for raw_file in data_list:
     row_counter = 0
     geo_parser, next_expected_line = reset_state(geo_parser)
     print(f"Openning file {join(input_dir, raw_file)}")
-    input()
     with open(join(input_dir, raw_file)) as file:
         for row in file:
             row_counter += 1
@@ -75,12 +73,7 @@ for raw_file in data_list:
 
             if geo_parser.is_complete():
                 geo_point = geo_parser.get_geo_point()
-                print(f"Completed geo point: {geo_point}")
-                input()
                 found_point = locator.find_point(geo_point)
-                print(f"Found: {found_point}")
-                input()
                 adr = Address(found_point)
                 adr.persist_address()
-                input()
                 geo_parser, next_expected_line = reset_state(geo_parser)
