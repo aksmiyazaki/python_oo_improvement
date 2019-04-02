@@ -40,3 +40,8 @@ Cons:
   - 'a' - append only
   - 'r+' - reading and writing
   - 'w+' - writing and reading (ovewrites existing files)
+
+## Arbitrary no. of arguments
+  - \*args - unlimited params no. as a tuple
+  - \*\*kwargs - keyword arguments, ulimited pairs of key:value params - dictionary.
+  - both can be used combined
