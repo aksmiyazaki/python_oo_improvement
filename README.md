@@ -41,6 +41,13 @@ Cons:
   - 'r+' - reading and writing
   - 'w+' - writing and reading (ovewrites existing files)
 
+## Useful Operators
+  - enumerate - solves the problem of having an integer iterator when iterating through a list/tuple/dictionary
+  - zip - Concatenates items from two lists.
+  - randint - Returns a random integer
+  - Shuffle - shuffles lists
+  
+
 ## Arbitrary no. of arguments
   - \*args - unlimited params no. as a tuple
   - \*\*kwargs - keyword arguments, ulimited pairs of key:value params - dictionary.
