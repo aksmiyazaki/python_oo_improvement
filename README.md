@@ -46,9 +46,28 @@ Cons:
   - zip - Concatenates items from two lists.
   - randint - Returns a random integer
   - Shuffle - shuffles lists
-  
+
 
 ## Arbitrary no. of arguments
   - \*args - unlimited params no. as a tuple
   - \*\*kwargs - keyword arguments, ulimited pairs of key:value params - dictionary.
   - both can be used combined
+
+## Map Function
+  - Applies a function in every element of an array
+  - To use the result, must be created a list on its return (returns a map address)
+
+## Filter
+  - Applies a boolean function in every element of an array
+  - Filters the ones which the function returns true when applied to the element.
+
+## Scope
+  - LEGB rule
+    - First serches Local
+    - Then goes to the enclosing function
+    - Then goes global
+    - Then goes Built In.
+  - global keyword gets variables directly from the global scope. Beware with it.
+
+## General
+  - A Function can be declared inside another function.
